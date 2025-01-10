@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+    integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+  <link rel="stylesheet" href="./style.css">
+    <title>To Do List</title>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="reloj"><i class="fa-solid fa-clock" style="color: #B197FC;"></i>
+            </div>
+            <h1 class="greeting">Good Morning!</h1>
+        </header>
+        <form class="task-form">
+
+            <!-- new task -->
+            <div class="task-input-style">
+                <input type="text"
+                class="task-input-style"
+                id="task-input"
+                placeholder= "New Task">
+            </div>
+
+            <!-- add button -->
+            <div class="submit-task">
+                <button type="submit" class="add-task btn">
+                     Add!
+                </button>
+    
+            </div>
+        </form>
+
+        <div class="task-container">
+            <h2>To-Do List</h2>
+
+            <!-- task list -->
+             <ul class="task-list">
+                <div class="list-items">
+                    <li>
+                        <div class="text-checkbox">
+                            <input type="checkbox" name="task" id="checkbox">
+                        100 Days of Code
+                        </div>
+                        <button class="remove-task">
+                            <i class="fa-solid fa-trash" style="color: #B197FC;"></i>
+                        </button>
+                    </li>
+                    <li>
+                        <div class="text-checkbox">
+                            <input type="checkbox" name="task" id="checkbox">
+                        Study Calculus
+                        </div>
+                        <button class="remove-task">
+                            <i class="fa-solid fa-trash" style="color: #B197FC;"></i>
+                        </button>
+                    </li>
+                    <li>
+                        <div class="text-checkbox">
+                            <input type="checkbox" name="task" id="checkbox">
+                        Make Luch
+                        </div>
+                        <button class="remove-task">
+                            <i class="fa-solid fa-trash" style="color: #B197FC;"></i>
+                        </button>
+                    </li> 
+                </div>
+             </ul>
+             <div class="clear-container">
+                <button class="clear-list btn" id="clear">Clear List</button>
+             </div>
+        </div>
+    </div>
+
+    <script src="./script.js"></script>
+</body>
+</html>
