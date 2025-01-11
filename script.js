@@ -2,7 +2,7 @@ const taskForm = document.querySelector('.task-form');
 const taskInput = document.getElementById('task-input');
 
 //ul que contiene los li de las tareas
-const taskList = document.querySelector('.task-list');
+const taskList = document.getElementById('task-list');
 const listItemsDiv = document.querySelector('list-items');
 //boton para limpiar la lista
 const clearBtn = document.querySelector('.clear-list');
@@ -69,5 +69,42 @@ function createIcon(){
     icon.classList.add('fa-solid', 'fa-trash');
     return icon;
 }
+
+//function to remove task (from DOM)
+function removeTask(e){
+    if(e.target.parentElement.classList.contains('remove-task')){
+        // console.log(e.target.parentElement.parentElement);
+        e.target.parentElement.parentElement.remove();
+    }
+    checkUI();
+}
+
+//function to clear all tasks
+function clear(){
+
+
+    while(taskList.firstChild){
+        taskList.removeChild(taskList.firstChild);
+    }
+    checkUI();
+    
+}
+
+//function to check UI
+function checkUI(){
+    const tasks = document.querySelectorAll('li');
+    if( tasks.length === 0){
+        clearBtn.style.display = 'none';
+    }else{
+        clearBtn.style.display = 'block';
+    }
+    console.log(clearBtn);
+}
+
+checkUI();
+
 // Event Listeners
 taskForm.addEventListener('submit', addTask);
+taskList.addEventListener('click', removeTask);
+clearBtn.addEventListener('click', clear);
+document.addEventListener('DOMContentLoaded',checkUI);
