@@ -159,7 +159,34 @@ input[type="checkbox"] {
     margin-right: 15px;
   }
 
-  
+  /* filter */
+  #filter{
+    border: none;
+    background-color: transparent;
+    font-size: 25px;
+    border-bottom: 1px solid #ae2dfe;
+    margin: 0 auto;
+    margin-left: 100px;
+    color: #ae2dfe;
+    font-family: inherit;
+    font-weight: 700;
+    outline: none;
+    opacity: 0.7;
+    
+
+
+  }
+  .filter{
+    margin: 0 auto;
+    display: flex;
+    margin-top: 80px;
+    margin-left: 50px;
+    justify-content: center;
+    align-items: center;
+    max-width: 300px;
+    
+
+  }
   
 /* li {
     

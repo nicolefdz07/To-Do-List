@@ -6,6 +6,7 @@ const taskList = document.getElementById('task-list');
 const listItemsDiv = document.querySelector('list-items');
 //boton para limpiar la lista
 const clearBtn = document.querySelector('.clear-list');
+const filter = document.getElementById('filter');
 
 //boton para añadir tarea
 const addBtn = document.querySelector('.add-task');
@@ -20,7 +21,7 @@ function addTask(e){
         alert('Please, add a task');
         return;
     }
-    console.log('success');
+    console.log('success'); 
 
     //create li element
     const li = document.createElement('li');
@@ -33,6 +34,7 @@ function addTask(e){
     taskList.appendChild(li);
     taskInput.value = '';
     // console.log(li);
+    checkUI();
 }
 
 //function create checkbox
@@ -74,8 +76,10 @@ function createIcon(){
 function removeTask(e){
     if(e.target.parentElement.classList.contains('remove-task')){
         // console.log(e.target.parentElement.parentElement);
+        if(confirm('Are you sure?')){
         e.target.parentElement.parentElement.remove();
     }
+}
     checkUI();
 }
 
@@ -84,22 +88,50 @@ function clear(){
 
 
     while(taskList.firstChild){
+        
         taskList.removeChild(taskList.firstChild);
     }
     checkUI();
     
 }
 
+
+//function to filter tasks
+function filterTasks(e){
+    const tasks = document.querySelectorAll('li');
+    const text = e.target.value.toLowerCase();
+    // console.log(text);
+    tasks.forEach(task => {
+        const taskName = task.firstElementChild.textContent.trim().toLowerCase();
+        // console.log(taskName);
+
+
+        //if what we type is in the task name, display the task
+        if(taskName.indexOf(text) != -1){
+            task.style.display = 'flex';
+        }else{
+            task.style.display = 'none';
+        }
+    });
+
+}
+
 //function to check UI
 function checkUI(){
     const tasks = document.querySelectorAll('li');
+    
     if( tasks.length === 0){
         clearBtn.style.display = 'none';
+        filter.style.display = 'none';
     }else{
         clearBtn.style.display = 'block';
+        filter.style.display = 'block';
     }
-    console.log(clearBtn);
+    // console.log(clearBtn);
 }
+// console.log(document.querySelector('li').firstChild.textContent);
+// console.log(document.querySelector('li > .text-checkbox').textContent.trim());
+// console.log(document.querySelector('li').firstElementChild.textContent.trim());
 
 checkUI();
 
@@ -107,4 +139,5 @@ checkUI();
 taskForm.addEventListener('submit', addTask);
 taskList.addEventListener('click', removeTask);
 clearBtn.addEventListener('click', clear);
+filter.addEventListener('input', filterTasks);
 document.addEventListener('DOMContentLoaded',checkUI);
