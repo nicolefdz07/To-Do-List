@@ -3,13 +3,15 @@ const taskInput = document.getElementById('task-input');
 
 //ul que contiene los li de las tareas
 const taskList = document.getElementById('task-list');
-const listItemsDiv = document.querySelector('list-items');
+const listItemsDiv = document.querySelector('.list-items');
 //boton para limpiar la lista
 const clearBtn = document.querySelector('.clear-list');
 const filter = document.getElementById('filter');
 
 //boton para añadir tarea
 const addBtn = document.querySelector('.add-task');
+// const checkBox = document.getElementById('checkbox');
+const checkboxes = document.querySelectorAll('input[type="checkbox"]');
 
 
 //function to add a task (to DOM for the moment)
@@ -35,6 +37,7 @@ function addTask(e){
     taskInput.value = '';
     // console.log(li);
     checkUI();
+    
 }
 
 //function create checkbox
@@ -81,6 +84,7 @@ function removeTask(e){
     }
 }
     checkUI();
+
 }
 
 //function to clear all tasks
@@ -92,6 +96,7 @@ function clear(){
         taskList.removeChild(taskList.firstChild);
     }
     checkUI();
+    
     
 }
 
@@ -113,8 +118,32 @@ function filterTasks(e){
             task.style.display = 'none';
         }
     });
+    
 
 }
+
+//function to check checkbox
+function checkCheckBox(){
+
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach(checkbox =>{
+        if(checkbox.checked){
+            checkbox.parentElement.style.textDecoration = 'line-through';
+        }else{
+            checkbox.parentElement.style.textDecoration = 'none';
+        }
+    });
+
+    // console.log(checkbox.checked);
+    // if(this.checked){
+    //     this.parentElement.style.textDecoration = 'line-through';
+        
+    // }else{
+    //     this.parentElement.style.textDecoration = 'none';
+    // }
+}
+
+
 
 //function to check UI
 function checkUI(){
@@ -128,16 +157,27 @@ function checkUI(){
         filter.style.display = 'block';
     }
     // console.log(clearBtn);
+    checkCheckBox();
+    // 
+    
+    
 }
 // console.log(document.querySelector('li').firstChild.textContent);
 // console.log(document.querySelector('li > .text-checkbox').textContent.trim());
 // console.log(document.querySelector('li').firstElementChild.textContent.trim());
 
+
 checkUI();
+// console.log(document.querySelector('li').firstElementChild.textContent);
 
 // Event Listeners
 taskForm.addEventListener('submit', addTask);
 taskList.addEventListener('click', removeTask);
 clearBtn.addEventListener('click', clear);
 filter.addEventListener('input', filterTasks);
+// checkboxes.addEventListener('click', checkCheckBox);
 document.addEventListener('DOMContentLoaded',checkUI);
+checkboxes.forEach(checkbox =>{
+    checkbox.addEventListener('change', checkCheckBox)
+});
+
