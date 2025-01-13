@@ -200,6 +200,7 @@ function clear(){
     }
     // localStorage.removeTask('tasks');
     // localStorage.clear();
+    localStorage.clear();  
     checkUI();
     
     
