@@ -21,6 +21,7 @@ function displayTasks(){
         addTaskToDOM(task);
     });
     checkUI();
+    
 }
 //handler function that calls the function to add tasks to the DOM and local storage
 function onAddItemSubmit(e){
@@ -34,9 +35,11 @@ function onAddItemSubmit(e){
 
     //add task to DOM
     addTaskToDOM(newTask);
+    
 
     //add task to local storage
     addTaskToStorage(newTask);
+    checkCheckBox();
     taskInput.value = '';
     // console.log(li);
     checkUI();
@@ -54,6 +57,7 @@ function addTaskToDOM(task){
 
     //append li to ul (D0M)
     taskList.appendChild(li);
+    
 }
 
 //function to add tasks to local storage
@@ -120,6 +124,13 @@ function createCheckbox(text){
     checkbox.name = 'task';
     checkbox.id = 'checkbox';
 
+    checkbox.addEventListener('change', function() {
+        if(this.checked) {
+            div.style.textDecoration = 'line-through';
+        } else {
+            div.style.textDecoration = 'none';
+        }
+    });
     const taskText =  document.createTextNode(text);
 
     div.appendChild(checkbox);
@@ -145,17 +156,39 @@ function createIcon(){
     return icon;
 }
 
-//function to remove task (from DOM)
-function removeTask(e){
+function onClickTask(e){
     if(e.target.parentElement.classList.contains('remove-task')){
-        // console.log(e.target.parentElement.parentElement);
-        if(confirm('Are you sure?')){
-        e.target.parentElement.parentElement.remove();
-    }
+    removeTask(e.target.parentElement.parentElement);
 }
-    checkUI();
+}
 
+//function to remove task (from DOM)
+function removeTask(task){
+        if(confirm('Are you sure?')){
+            //remove task from DOM
+        task.remove();
+
+        //remove task from storage
+        removeTaskFromStorage(task.textContent);
+    }
+    checkUI();
 }
+
+//function to remove task from storage
+function removeTaskFromStorage(task){
+    let tasksFromStorage = getTasksFromStorage();
+
+    //filter out tasks to be removed(an array that contains all the tasks except the one that is been passed as an argument)
+    tasksFromStorage = tasksFromStorage.filter(i => i !== task);
+
+    //reset to local storage
+    localStorage.setItem('tasks', JSON.stringify(tasksFromStorage));
+
+    
+}
+    
+
+
 
 //function to clear all tasks
 function clear(){
@@ -165,6 +198,8 @@ function clear(){
         
         taskList.removeChild(taskList.firstChild);
     }
+    // localStorage.removeTask('tasks');
+    // localStorage.clear();
     checkUI();
     
     
@@ -195,7 +230,7 @@ function filterTasks(e){
 //function to check checkbox
 function checkCheckBox(){
 
-    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    let checkboxes = document.querySelectorAll('input[type="checkbox"]');
     checkboxes.forEach(checkbox =>{
         if(checkbox.checked){
             checkbox.parentElement.style.textDecoration = 'line-through';
@@ -204,13 +239,6 @@ function checkCheckBox(){
         }
     });
 
-    // console.log(checkbox.checked);
-    // if(this.checked){
-    //     this.parentElement.style.textDecoration = 'line-through';
-        
-    // }else{
-    //     this.parentElement.style.textDecoration = 'none';
-    // }
 }
 
 
@@ -231,6 +259,7 @@ function checkUI(){
     // 
     
     
+    
 }
 // console.log(document.querySelector('li').firstChild.textContent);
 // console.log(document.querySelector('li > .text-checkbox').textContent.trim());
@@ -239,21 +268,23 @@ init();
 //function to initialize app
 
 function init(){
-    checkUI();
     
     
-    // Event Listeners
-    taskForm.addEventListener('submit', onAddItemSubmit); //anadirlo en el dom y en local storage
-    // taskForm.addEventListener('submit', addTask);
-    taskList.addEventListener('click', removeTask);
+   
+    document.addEventListener('DOMContentLoaded', () => {
+        displayTasks();  // Primero cargamos las tareas
+        checkUI();      // Luego ejecutamos checkUI
+        
+        
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', checkCheckBox)
+        });
+    });
+    
+    taskForm.addEventListener('submit', onAddItemSubmit);
+    taskList.addEventListener('click', onClickTask);
     clearBtn.addEventListener('click', clear);
     filter.addEventListener('input', filterTasks);
-    // checkboxes.addEventListener('click', checkCheckBox);
-    document.addEventListener('DOMContentLoaded',checkUI);
-    checkboxes.forEach(checkbox =>{
-        checkbox.addEventListener('change', checkCheckBox)
-    });
-    document.addEventListener('DOMContentLoaded', displayTasks);
-    
 }
 
