@@ -120,12 +120,19 @@ function createCheckbox(text){
     checkbox.name = 'task';
     checkbox.id = 'checkbox';
 
+    // Recuperar el estado guardado
+    checkbox.checked = localStorage.getItem(`checkbox_${text}`) === 'true';
+    div.style.textDecoration = checkbox.checked ? 'line-through' : 'none';
+
+
     checkbox.addEventListener('change', function() {
         if(this.checked) {
             div.style.textDecoration = 'line-through';
         } else {
             div.style.textDecoration = 'none';
         }
+         // Guardar el estado
+         localStorage.setItem(`checkbox_${text}`, this.checked);
     });
     const taskText =  document.createTextNode(text);
 
