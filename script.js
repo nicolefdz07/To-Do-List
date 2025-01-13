@@ -12,7 +12,29 @@ const filter = document.getElementById('filter');
 const addBtn = document.querySelector('.add-task');
 // const checkBox = document.getElementById('checkbox');
 const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+const formBtn = taskForm.querySelector('button');
+const greeting = document.querySelector('.greeting');
+let isEditMode = false;
+const now = new Date();
+const hour = now.getHours();
 
+//function to display greeting
+function displayGreeting(){
+    if(hour >= 6 && hour < 12){
+        greeting.textContent = 'Good Morning!';
+    } else if(hour >= 12 && hour < 18){
+        greeting.textContent = 'Good Afternoon!';
+    } else {
+        greeting.textContent = 'Good Evening!';
+    }
+}
+
+displayGreeting();
+
+
+
+
+//======================================================================
 //function to display tasks from local storage
 function displayTasks(){
     const tasksFromStorage = getTasksFromStorage();
@@ -86,32 +108,6 @@ function getTasksFromStorage(){
 }
 
 //===============================================================================================
-//function to add a task (to DOM for the moment)
-// function addTask(e){
-//     e.preventDefault();
-
-//     const newTask = taskInput.value;
-//     if(newTask === ''){
-//         alert('Please, add a task');
-//         return;
-//     }
-//     console.log('success'); 
-
-//     //create li element
-//     const li = document.createElement('li');
-//     let checkbox = createCheckbox(newTask);
-//     li.appendChild(checkbox);
-//     const deleteIcon = createTrash();
-//     li.appendChild(deleteIcon);
-
-//     //append li to ul
-//     taskList.appendChild(li);
-//     taskInput.value = '';
-//     // console.log(li);
-//     checkUI();
-    
-// }
-//===============================================================================================
 //function create checkbox
 
 
@@ -159,8 +155,24 @@ function createIcon(){
 function onClickTask(e){
     if(e.target.parentElement.classList.contains('remove-task')){
     removeTask(e.target.parentElement.parentElement);
+// }else{
+//     setTaskToEdit(e.target.parentElement.firstElementChild.textContent);
+//     console.log(e.target.parentElement.firstElementChild.textContent);
+// }
 }
 }
+
+
+
+// //function to set item to edit
+// function setTaskToEdit(task){
+//     isEditMode = true;
+
+    
+//     formBtn.innerHTML = '<i class="fa-solid fa-pen"></i> Update!';
+//     formBtn.style.backgroundColor = '#8D3EF1';
+//     taskInput.value = task;
+// }
 
 //function to remove task (from DOM)
 function removeTask(task){
@@ -275,6 +287,7 @@ function init(){
     document.addEventListener('DOMContentLoaded', () => {
         displayTasks();  // Primero cargamos las tareas
         checkUI();      // Luego ejecutamos checkUI
+        displayGreeting();
         
         
         const checkboxes = document.querySelectorAll('input[type="checkbox"]');
